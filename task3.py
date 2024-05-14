@@ -98,7 +98,7 @@ class TicTacToe:
         Starts the Tic Tac Toe game.
         """
 
-
+        flag = True
         player = 'X'
         while True:
             print(f"Player {player} turn")
@@ -106,7 +106,11 @@ class TicTacToe:
 
             if player == 'X':
                 row, col = list(map(int, input("Enter row and column numbers to fix spot: ").split()))
-                self.fix_spot(row - 1, col - 1, player)
+                if self.board[row-1][col-1] == '-':
+                    self.fix_spot(row - 1, col - 1, player)
+                else:
+                    flag = False
+                    print('Enter a valid move.')
             else:
                 # Computer's turn
                 best_move, best_score = self.best_move()
@@ -119,8 +123,10 @@ class TicTacToe:
             elif self.is_board_filled():
                 print("Match Draw!")
                 break
-
-            player = self.swap_player_turn(player)
+            if flag:
+                player = self.swap_player_turn(player)
+            else:
+                flag = True
             print()
 
     def show_board(self):
