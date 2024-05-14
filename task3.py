@@ -79,11 +79,13 @@ class TicTacToe:
         print(f"Heuristic values for all considered states:")
         best_score = float('-inf')
         best_move = None
+        empty_spaces = sum(row.count('-') for row in self.board)
+        depth = 9 - empty_spaces
         for i in range(3):
             for j in range(3):
                 if self.board[i][j] == '-':
                     self.fix_spot(i, j, 'O')
-                    score = self.minimax(4, False)
+                    score = self.minimax(depth, False)
                     print(f"({i + 1}, {j + 1}): {score}")
                     self.fix_spot(i, j, '-')
                     if score > best_score:
