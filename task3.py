@@ -7,9 +7,6 @@ class TicTacToe:
                       ['X', 'O', 'O'],
                       ['-', '-', '-']]  # Initialize an empty board
 
-
-
-
     def fix_spot(self, row, col, player):
         """
         Fixes the spot on the board with the player's symbol ('X' or 'O').
@@ -78,13 +75,16 @@ class TicTacToe:
         """
         Determines the best move for the computer player using the minimax algorithm.
         """
+        print(f"Computer (O) is thinking...")
+        print(f"Heuristic values for all considered states:")
         best_score = float('-inf')
         best_move = None
         for i in range(3):
             for j in range(3):
                 if self.board[i][j] == '-':
                     self.fix_spot(i, j, 'O')
-                    score = self.minimax(0, False)
+                    score = self.minimax(4, False)
+                    print(f"({i + 1}, {j + 1}): {score}")
                     self.fix_spot(i, j, '-')
                     if score > best_score:
                         best_score = score
@@ -108,16 +108,7 @@ class TicTacToe:
             else:
                 # Computer's turn
                 best_move, best_score = self.best_move()
-                print(f"Computer (O) is thinking...")
-                print(f"Heuristic values for all considered states:")
-                for i in range(3):
-                    for j in range(3):
-                        if self.board[i][j] == '-':
-                            self.fix_spot(i, j, 'O')
-                            score = self.minimax(0, False)
-                            self.fix_spot(i, j, '-')
-                            print(f"({i+1}, {j+1}): {score}")
-                print(f"Determination of the best move: {best_move} with heuristic value: {best_score}")
+                print(f"Determination of the best move against: {best_move} with heuristic value: {best_score}")
                 self.fix_spot(best_move[0], best_move[1], player)
 
             if self.is_player_win(player):
